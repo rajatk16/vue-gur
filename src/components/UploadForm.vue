@@ -1,19 +1,30 @@
 <template>
-  <div class="dropper">
-    <input 
-      type="file"
-      multiple
-      accept="image/*" 
-      @change="uploadImages($event.target.files)" 
-    />
-    <span>Drag Files to Upload</span>
+  <div>
+    <div v-if="isLoggedIn" class="dropper">
+      <input 
+        type="file"
+        multiple
+        accept="image/*" 
+        @change="uploadImages($event.target.files)" 
+      />
+      <span>Drag Files to Upload</span>
+    </div>
+    <div v-else class="ui floating compact info message">
+      <div class="header">
+        You are not Logged In!
+      </div>
+      <p>Please Log In with Imgur to use this app and upload your amazing pics!</p>
+    </div>
   </div>
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 export default {
   name: 'UploadForm',
+  computed: {
+    ...mapGetters(['isLoggedIn'])
+  },
   methods: {
     ...mapActions(['uploadImages'])
   }
